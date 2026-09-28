@@ -34,6 +34,7 @@ import {
   getStoredItems, 
   saveItems 
 } from './utils/storage';
+import { api } from './utils/api';
 import { checkCompanyProfileCompleteness } from './utils/gstCalculations';
 
 export default function App() {
@@ -52,6 +53,58 @@ export default function App() {
   const [editingInvoice, setEditingInvoice] = useState(null);
   const [viewingInvoice, setViewingInvoice] = useState(null);
   const [previewTemplate, setPreviewTemplate] = useState('sairam');
+
+  // Sync live backend data on login or mount
+  useEffect(() => {
+    if (currentUser) {
+      async function syncData() {
+        try {
+          const [fetchedComps, fetchedInvs, fetchedParties, fetchedItems] = await Promise.all([
+            api.getCompanies().catch(() => null),
+            api.getInvoices().catch(() => null),
+            api.getParties().catch(() => null),
+            api.getItems().catch(() => null)
+          ]);
+
+          if (fetchedComps && Array.isArray(fetchedComps) && fetchedComps.length > 0) {
+            setCompanies(fetchedComps);
+            saveCompanies(fetchedComps);
+            const userComp = fetchedComps.find(c => c.id === currentUser.companyId) || fetchedComps[0];
+            if (userComp) {
+              setActiveCompany(userComp);
+            }
+          }
+
+          if (fetchedInvs && Array.isArray(fetchedInvs)) {
+            setInvoices(fetchedInvs);
+            saveInvoices(fetchedInvs);
+          }
+
+          if (fetchedParties && Array.isArray(fetchedParties)) {
+            setParties(fetchedParties);
+            saveParties(fetchedParties);
+          }
+
+          if (fetchedItems && Array.isArray(fetchedItems)) {
+            setItems(fetchedItems);
+            saveItems(fetchedItems);
+          }
+
+          if (currentUser.role === 'SuperAdmin') {
+            const fetchedUsers = await api.getUsers().catch(() => null);
+            if (fetchedUsers && Array.isArray(fetchedUsers)) {
+              setUsers(fetchedUsers);
+              saveUsers(fetchedUsers);
+            }
+          }
+        } catch (err) {
+          console.warn('Live API sync fallback to local cache:', err.message);
+        }
+      }
+
+      syncData();
+    }
+  }, [currentUser]);
 
   // Sync active company based on current logged in user
   useEffect(() => {
@@ -105,7 +158,8 @@ export default function App() {
     const updatedComps = companies.map(c => c.id === updatedCompany.id ? updatedCompany : c);
     setCompanies(updatedComps);
     saveCompanies(updatedComps);
-    if (updatedCompany.id === activeCompany.id) {
+    api.saveCompany(updatedCompany).catch(err => console.warn('API saveCompany fallback:', err));
+    if (updatedCompany.id === activeCompany?.id) {
       setActiveCompany(updatedCompany);
     }
   };
@@ -115,6 +169,7 @@ export default function App() {
     const updated = [...companies, newComp];
     setCompanies(updated);
     saveCompanies(updated);
+    api.saveCompany(newComp).catch(err => console.warn('API addCompany fallback:', err));
     handleCompanyChange(newComp.id);
   };
 
@@ -140,6 +195,7 @@ export default function App() {
     setUsers(updatedUsers);
     saveUsers(updatedUsers);
 
+    api.saveUserAccount(userPayload, companyPayload).catch(err => console.warn('API saveUserAccount fallback:', err));
     alert(`Account for ${userPayload.email} saved successfully!`);
   };
 
@@ -147,6 +203,7 @@ export default function App() {
     const updated = users.filter(u => u.id !== userId);
     setUsers(updated);
     saveUsers(updated);
+    api.deleteUserAccount(userId).catch(err => console.warn('API deleteUserAccount fallback:', err));
   };
 
   const handleSuperAdminSwitchView = (companyId) => {
@@ -181,6 +238,7 @@ export default function App() {
         if (catIdx !== -1 && updatedItemsList[catIdx].type !== 'Service') {
           const newQty = Math.max(0, (updatedItemsList[catIdx].stockQty || 0) - (Number(invItem.quantity) || 0));
           updatedItemsList[catIdx] = { ...updatedItemsList[catIdx], stockQty: newQty };
+          api.saveItem(updatedItemsList[catIdx]).catch(err => console.warn('API saveItem fallback:', err));
         }
       });
       setItems(updatedItemsList);
@@ -196,6 +254,7 @@ export default function App() {
     }
     setInvoices(updated);
     saveInvoices(updated);
+    api.saveInvoice(fullPayload).catch(err => console.warn('API saveInvoice fallback:', err));
     setActiveTab('invoices');
   };
 
@@ -203,6 +262,7 @@ export default function App() {
     const updated = invoices.filter(i => i.id !== id);
     setInvoices(updated);
     saveInvoices(updated);
+    api.deleteInvoice(id).catch(err => console.warn('API deleteInvoice fallback:', err));
   };
 
   const handleDuplicateInvoice = (inv) => {
@@ -216,6 +276,7 @@ export default function App() {
     const updated = [duplicate, ...invoices];
     setInvoices(updated);
     saveInvoices(updated);
+    api.saveInvoice(duplicate).catch(err => console.warn('API duplicateInvoice fallback:', err));
   };
 
   // PARTY & ITEM HANDLERS
@@ -230,12 +291,14 @@ export default function App() {
     }
     setParties(updated);
     saveParties(updated);
+    api.saveParty(payloadWithComp).catch(err => console.warn('API saveParty fallback:', err));
   };
 
   const handleDeleteParty = (id) => {
     const updated = parties.filter(p => p.id !== id);
     setParties(updated);
     saveParties(updated);
+    api.deleteParty(id).catch(err => console.warn('API deleteParty fallback:', err));
   };
 
   const handleSaveItem = (itemPayload) => {
@@ -249,12 +312,14 @@ export default function App() {
     }
     setItems(updated);
     saveItems(updated);
+    api.saveItem(payloadWithComp).catch(err => console.warn('API saveItem fallback:', err));
   };
 
   const handleDeleteItem = (id) => {
     const updated = items.filter(i => i.id !== id);
     setItems(updated);
     saveItems(updated);
+    api.deleteItem(id).catch(err => console.warn('API deleteItem fallback:', err));
   };
 
   // Filter scoped data based on active company safely

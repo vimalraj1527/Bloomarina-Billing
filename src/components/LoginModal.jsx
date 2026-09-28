@@ -1,21 +1,29 @@
 import React, { useState } from 'react';
 import { Flower2, Lock, Mail, ArrowRight } from 'lucide-react';
-import { authenticateUser } from '../utils/storage';
+import { authenticateUserAsync } from '../utils/storage';
 
 export default function LoginModal({ onLoginSuccess }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg('');
+    setLoading(true);
 
-    const res = authenticateUser(email, password);
-    if (res.success) {
-      onLoginSuccess(res.user);
-    } else {
-      setErrorMsg(res.message);
+    try {
+      const res = await authenticateUserAsync(email, password);
+      if (res.success) {
+        onLoginSuccess(res.user);
+      } else {
+        setErrorMsg(res.message);
+      }
+    } catch (err) {
+      setErrorMsg('Login failed: ' + (err.message || 'Server error'));
+    } finally {
+      setLoading(false);
     }
   };
 

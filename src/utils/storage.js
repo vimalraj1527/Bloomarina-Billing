@@ -83,6 +83,22 @@ export function setCurrentSession(user) {
   }
 }
 
+import { api } from './api';
+
+export async function authenticateUserAsync(email, password) {
+  try {
+    const res = await api.login(email, password);
+    if (res.success && res.user) {
+      const sessionUser = { ...res.user, token: res.token };
+      setCurrentSession(sessionUser);
+      return { success: true, user: sessionUser };
+    }
+  } catch (err) {
+    console.warn('Backend API authentication unavailable, attempting local storage fallback:', err.message);
+  }
+  return authenticateUser(email, password);
+}
+
 export function authenticateUser(email, password) {
   const users = getStoredUsers();
   const cleanEmail = email.trim().toLowerCase();
