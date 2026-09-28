@@ -488,22 +488,24 @@ export default function App() {
               </div>
             </div>
 
-            <div className="p-6 overflow-y-auto bg-slate-950 flex justify-center print-container">
-              {previewTemplate === 'sairam' && (
-                <SairamExactTemplate invoice={viewingInvoice} company={activeCompany} />
-              )}
-              {previewTemplate === 'modern' && (
-                <ModernTemplate invoice={viewingInvoice} company={activeCompany} />
-              )}
-              {previewTemplate === 'classic' && (
-                <ClassicTemplate invoice={viewingInvoice} company={activeCompany} />
-              )}
-              {previewTemplate === 'minimal' && (
-                <MinimalTemplate invoice={viewingInvoice} company={activeCompany} />
-              )}
-              {previewTemplate === 'thermal' && (
-                <ThermalTemplate invoice={viewingInvoice} company={activeCompany} />
-              )}
+            <div className="p-3 sm:p-6 overflow-x-auto overflow-y-auto bg-slate-950 flex justify-center print-container min-w-0">
+              <div className="w-full max-w-full overflow-x-auto flex justify-center">
+                {previewTemplate === 'sairam' && (
+                  <SairamExactTemplate invoice={viewingInvoice} company={activeCompany} />
+                )}
+                {previewTemplate === 'modern' && (
+                  <ModernTemplate invoice={viewingInvoice} company={activeCompany} />
+                )}
+                {previewTemplate === 'classic' && (
+                  <ClassicTemplate invoice={viewingInvoice} company={activeCompany} />
+                )}
+                {previewTemplate === 'minimal' && (
+                  <MinimalTemplate invoice={viewingInvoice} company={activeCompany} />
+                )}
+                {previewTemplate === 'thermal' && (
+                  <ThermalTemplate invoice={viewingInvoice} company={activeCompany} />
+                )}
+              </div>
             </div>
           </div>
         </div>

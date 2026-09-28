@@ -76,38 +76,79 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser }) {
         </div>
       </aside>
 
-      {/* Mobile Sticky Bottom Navigation Bar (For Mobile Bookmarks & PWA) */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 backdrop-blur-xl border-t border-slate-800/90 px-1 py-2 flex items-center justify-around shadow-2xl pb-safe">
-        {menuItems.slice(0, 5).map((item) => {
-          const Icon = item.icon;
-          const isActive = activeTab === item.id;
-          return (
-            <button
-              key={item.id}
-              onClick={() => setActiveTab(item.id)}
-              className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-all ${
-                isActive
-                  ? 'text-amber-400 font-bold bg-amber-500/10 border border-amber-500/30'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              <Icon className={`w-5 h-5 mb-1 ${isActive ? 'text-amber-400' : 'text-slate-400'}`} />
-              <span className="text-[10px] leading-none truncate max-w-[64px]">
-                {item.id === 'dashboard' ? 'Home' : item.id === 'invoices' ? 'Bills' : item.id === 'parties' ? 'Clients' : item.id === 'inventory' ? 'Stock' : item.id === 'gstr' ? 'GSTR' : 'More'}
-              </span>
-            </button>
-          );
-        })}
+      {/* Mobile Sticky Bottom Navigation Bar */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 backdrop-blur-xl border-t border-slate-800/90 px-1 py-1.5 flex items-center justify-around shadow-2xl pb-safe">
+        {isSuperAdmin && (
+          <button
+            onClick={() => setActiveTab('admin')}
+            className={`flex flex-col items-center justify-center py-1 px-1.5 rounded-xl transition-all ${
+              activeTab === 'admin'
+                ? 'text-amber-400 font-bold bg-amber-500/10 border border-amber-500/30'
+                : 'text-slate-400 hover:text-slate-200'
+            }`}
+          >
+            <ShieldCheck className={`w-5 h-5 mb-0.5 ${activeTab === 'admin' ? 'text-amber-400' : 'text-slate-400'}`} />
+            <span className="text-[10px] leading-none">Admin</span>
+          </button>
+        )}
+
+        <button
+          onClick={() => setActiveTab('dashboard')}
+          className={`flex flex-col items-center justify-center py-1 px-1.5 rounded-xl transition-all ${
+            activeTab === 'dashboard'
+              ? 'text-amber-400 font-bold bg-amber-500/10 border border-amber-500/30'
+              : 'text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <LayoutDashboard className={`w-5 h-5 mb-0.5 ${activeTab === 'dashboard' ? 'text-amber-400' : 'text-slate-400'}`} />
+          <span className="text-[10px] leading-none">Home</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('invoices')}
+          className={`flex flex-col items-center justify-center py-1 px-1.5 rounded-xl transition-all ${
+            activeTab === 'invoices'
+              ? 'text-amber-400 font-bold bg-amber-500/10 border border-amber-500/30'
+              : 'text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <FileText className={`w-5 h-5 mb-0.5 ${activeTab === 'invoices' ? 'text-amber-400' : 'text-slate-400'}`} />
+          <span className="text-[10px] leading-none">Bills</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('parties')}
+          className={`flex flex-col items-center justify-center py-1 px-1.5 rounded-xl transition-all ${
+            activeTab === 'parties'
+              ? 'text-amber-400 font-bold bg-amber-500/10 border border-amber-500/30'
+              : 'text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <Users className={`w-5 h-5 mb-0.5 ${activeTab === 'parties' ? 'text-amber-400' : 'text-slate-400'}`} />
+          <span className="text-[10px] leading-none">Clients</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('inventory')}
+          className={`flex flex-col items-center justify-center py-1 px-1.5 rounded-xl transition-all ${
+            activeTab === 'inventory'
+              ? 'text-amber-400 font-bold bg-amber-500/10 border border-amber-500/30'
+              : 'text-slate-400 hover:text-slate-200'
+          }`}
+        >
+          <Package className={`w-5 h-5 mb-0.5 ${activeTab === 'inventory' ? 'text-amber-400' : 'text-slate-400'}`} />
+          <span className="text-[10px] leading-none">Stock</span>
+        </button>
 
         <button
           onClick={() => setActiveTab('settings')}
-          className={`flex flex-col items-center justify-center py-1 px-2.5 rounded-xl transition-all ${
+          className={`flex flex-col items-center justify-center py-1 px-1.5 rounded-xl transition-all ${
             activeTab === 'settings'
               ? 'text-amber-400 font-bold bg-amber-500/10 border border-amber-500/30'
               : 'text-slate-400 hover:text-slate-200'
           }`}
         >
-          <Settings className={`w-5 h-5 mb-1 ${activeTab === 'settings' ? 'text-amber-400' : 'text-slate-400'}`} />
+          <Settings className={`w-5 h-5 mb-0.5 ${activeTab === 'settings' ? 'text-amber-400' : 'text-slate-400'}`} />
           <span className="text-[10px] leading-none">Settings</span>
         </button>
       </nav>
