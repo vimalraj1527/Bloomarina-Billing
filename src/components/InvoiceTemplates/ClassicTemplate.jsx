@@ -18,44 +18,50 @@ export default function ClassicTemplate({ invoice, company }) {
       <div className="text-center border-b-2 border-black pb-2 mb-2">
         <div className="flex items-center justify-center space-x-3 mb-1">
           <h1 className="text-xl font-bold uppercase tracking-wider leading-none m-0 p-0">{invoice?.docType || 'TAX INVOICE'}</h1>
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '22px',
-            padding: '0 10px',
-            fontSize: '10px',
-            fontWeight: '800',
-            textTransform: 'uppercase',
-            color: '#000000',
-            backgroundColor: '#f8fafc',
-            border: '1.5px solid #000000',
-            borderRadius: '4px',
-            fontFamily: 'sans-serif',
-            boxSizing: 'border-box',
-            lineHeight: '1'
-          }}>
-            ORIGINAL FOR RECIPIENT
-          </div>
-          {invoice?.paymentStatus && (
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: '22px',
-              padding: '0 10px',
-              fontSize: '10px',
-              fontWeight: '800',
-              textTransform: 'uppercase',
-              color: invoice.paymentStatus === 'Paid' ? '#065f46' : '#92400e',
-              backgroundColor: invoice.paymentStatus === 'Paid' ? '#d1fae5' : '#fef3c7',
-              border: invoice.paymentStatus === 'Paid' ? '1.5px solid #059669' : '1.5px solid #d97706',
+          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+            <span style={{ 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              padding: '4px 10px', 
+              fontSize: '9.5px', 
+              fontWeight: '800', 
+              letterSpacing: '0.5px',
+              textTransform: 'uppercase', 
+              textAlign: 'center', 
+              color: '#000000', 
+              backgroundColor: '#f8fafc', 
+              border: '1.5px solid #000000', 
               borderRadius: '4px',
               fontFamily: 'sans-serif',
-              boxSizing: 'border-box',
-              lineHeight: '1'
+              lineHeight: '1',
+              boxSizing: 'border-box'
             }}>
-              {invoice.paymentStatus}
+              ORIGINAL FOR RECIPIENT
+            </span>
+          </div>
+          {invoice?.paymentStatus && (
+            <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+              <span style={{ 
+                display: 'inline-flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                padding: '4px 10px', 
+                fontSize: '9.5px', 
+                fontWeight: '800', 
+                letterSpacing: '0.5px',
+                textTransform: 'uppercase', 
+                textAlign: 'center', 
+                color: invoice.paymentStatus === 'Paid' ? '#065f46' : '#92400e', 
+                backgroundColor: invoice.paymentStatus === 'Paid' ? '#d1fae5' : '#fef3c7', 
+                border: invoice.paymentStatus === 'Paid' ? '1.5px solid #059669' : '1.5px solid #d97706', 
+                borderRadius: '4px',
+                fontFamily: 'sans-serif',
+                lineHeight: '1',
+                boxSizing: 'border-box'
+              }}>
+                {invoice.paymentStatus}
+              </span>
             </div>
           )}
         </div>

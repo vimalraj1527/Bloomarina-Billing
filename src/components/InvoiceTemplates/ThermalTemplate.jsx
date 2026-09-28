@@ -21,42 +21,48 @@ export default function ThermalTemplate({ invoice, company }) {
         {company?.gstin && <p className="text-[10px]">GSTIN: {company.gstin}</p>}
         {company?.phone && <p className="text-[10px]">Ph: {company.phone}</p>}
         <div className="mt-1 flex items-center justify-center space-x-1">
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '18px',
-            padding: '0 6px',
-            fontSize: '9px',
-            fontWeight: '800',
-            textTransform: 'uppercase',
-            color: '#000000',
-            backgroundColor: '#ffffff',
-            border: '1px solid #000000',
-            borderRadius: '3px',
-            boxSizing: 'border-box',
-            lineHeight: '1'
-          }}>
-            ORIGINAL FOR RECIPIENT
+          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+            <span style={{ 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              padding: '3px 6px', 
+              fontSize: '8.5px', 
+              fontWeight: '800', 
+              letterSpacing: '0.3px',
+              textTransform: 'uppercase', 
+              textAlign: 'center', 
+              color: '#000000', 
+              backgroundColor: '#ffffff', 
+              border: '1px solid #000000', 
+              borderRadius: '3px',
+              lineHeight: '1',
+              boxSizing: 'border-box'
+            }}>
+              ORIGINAL FOR RECIPIENT
+            </span>
           </div>
           {invoice?.paymentStatus && (
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: '18px',
-              padding: '0 6px',
-              fontSize: '9px',
-              fontWeight: '800',
-              textTransform: 'uppercase',
-              color: '#000000',
-              backgroundColor: '#ffffff',
-              border: '1px solid #000000',
-              borderRadius: '3px',
-              boxSizing: 'border-box',
-              lineHeight: '1'
-            }}>
-              {invoice.paymentStatus}
+            <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+              <span style={{ 
+                display: 'inline-flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                padding: '3px 6px', 
+                fontSize: '8.5px', 
+                fontWeight: '800', 
+                letterSpacing: '0.3px',
+                textTransform: 'uppercase', 
+                textAlign: 'center', 
+                color: '#000000', 
+                backgroundColor: '#ffffff', 
+                border: '1px solid #000000', 
+                borderRadius: '3px',
+                lineHeight: '1',
+                boxSizing: 'border-box'
+              }}>
+                {invoice.paymentStatus}
+              </span>
             </div>
           )}
         </div>

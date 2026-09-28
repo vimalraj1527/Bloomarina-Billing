@@ -39,43 +39,49 @@ export default function SairamExactTemplate({ invoice, company }) {
             <h2 className="font-black text-lg tracking-wider text-black uppercase m-0 p-0 leading-none">
               {invoice?.docType || 'TAX INVOICE'}
             </h2>
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: '22px',
-              padding: '0 10px',
-              fontSize: '10px',
-              fontWeight: '800',
-              textTransform: 'uppercase',
-              color: '#0f172a',
-              backgroundColor: '#f1f5f9',
-              border: '1.5px solid #475569',
-              borderRadius: '4px',
-              boxSizing: 'border-box',
-              lineHeight: '1'
-            }}>
-              ORIGINAL FOR RECIPIENT
+            <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+              <span style={{ 
+                display: 'inline-flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                padding: '4px 10px', 
+                fontSize: '9.5px', 
+                fontWeight: '800', 
+                letterSpacing: '0.5px',
+                textTransform: 'uppercase', 
+                textAlign: 'center', 
+                color: '#0f172a', 
+                backgroundColor: '#f1f5f9', 
+                border: '1.5px solid #475569', 
+                borderRadius: '4px',
+                lineHeight: '1',
+                boxSizing: 'border-box'
+              }}>
+                ORIGINAL FOR RECIPIENT
+              </span>
             </div>
           </div>
           {invoice?.paymentStatus && (
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: '22px',
-              padding: '0 10px',
-              fontSize: '10px',
-              fontWeight: '800',
-              textTransform: 'uppercase',
-              color: invoice.paymentStatus === 'Paid' ? '#065f46' : '#92400e',
-              backgroundColor: invoice.paymentStatus === 'Paid' ? '#d1fae5' : '#fef3c7',
-              border: invoice.paymentStatus === 'Paid' ? '1.5px solid #059669' : '1.5px solid #d97706',
-              borderRadius: '4px',
-              boxSizing: 'border-box',
-              lineHeight: '1'
-            }}>
-              {invoice.paymentStatus}
+            <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+              <span style={{ 
+                display: 'inline-flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                padding: '4px 10px', 
+                fontSize: '9.5px', 
+                fontWeight: '800', 
+                letterSpacing: '0.5px',
+                textTransform: 'uppercase', 
+                textAlign: 'center', 
+                color: invoice.paymentStatus === 'Paid' ? '#065f46' : '#92400e', 
+                backgroundColor: invoice.paymentStatus === 'Paid' ? '#d1fae5' : '#fef3c7', 
+                border: invoice.paymentStatus === 'Paid' ? '1.5px solid #059669' : '1.5px solid #d97706', 
+                borderRadius: '4px',
+                lineHeight: '1',
+                boxSizing: 'border-box'
+              }}>
+                {invoice.paymentStatus}
+              </span>
             </div>
           )}
         </div>
