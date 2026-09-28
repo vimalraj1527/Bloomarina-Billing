@@ -33,13 +33,24 @@ export default function SairamExactTemplate({ invoice, company }) {
     >
       {/* 1. Header Section */}
       <div className="space-y-1 pb-3">
-        <div className="flex flex-row items-center justify-start gap-3">
-          <h2 className="font-extrabold text-base tracking-wider text-black uppercase leading-none m-0 p-0 inline-block align-middle">
-            {invoice?.docType || 'TAX INVOICE'}
-          </h2>
-          <span className="text-[10px] font-bold text-slate-800 border border-slate-400 px-2 py-1 rounded uppercase leading-none inline-block align-middle bg-white shrink-0">
-            ORIGINAL FOR RECIPIENT
-          </span>
+        <div className="flex items-center justify-between pb-1">
+          <div className="flex items-center space-x-3">
+            <h2 className="font-black text-lg tracking-wider text-black uppercase m-0 p-0 leading-none">
+              {invoice?.docType || 'TAX INVOICE'}
+            </h2>
+            <span className="text-[10px] font-bold text-slate-900 border border-slate-500 px-2.5 py-0.5 rounded uppercase leading-none bg-slate-100 shrink-0">
+              ORIGINAL FOR RECIPIENT
+            </span>
+          </div>
+          {invoice?.paymentStatus && (
+            <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded uppercase border ${
+              invoice.paymentStatus === 'Paid' 
+                ? 'bg-emerald-100 text-emerald-800 border-emerald-300' 
+                : 'bg-amber-100 text-amber-800 border-amber-300'
+            }`}>
+              {invoice.paymentStatus}
+            </span>
+          )}
         </div>
 
         <h1 className="font-heading font-black text-2xl sm:text-3xl text-black tracking-tight pt-1 uppercase">
@@ -61,7 +72,7 @@ export default function SairamExactTemplate({ invoice, company }) {
           {company?.gstin && (
             <>
               <span className={company?.phone ? "ml-6" : ""}>GSTIN: </span>
-              <span className="font-bold uppercase">{company.gstin}</span>
+              <span className="font-bold uppercase font-mono">{company.gstin}</span>
             </>
           )}
         </p>
@@ -76,23 +87,29 @@ export default function SairamExactTemplate({ invoice, company }) {
       <hr className="border-t-2 border-black my-2" />
 
       {/* 2. Invoice Meta Box */}
-      <div className="border border-slate-400 rounded-lg p-2.5 bg-slate-50/50 flex justify-between items-center my-3 text-xs font-medium">
+      <div className="border border-slate-400 rounded-lg p-2.5 bg-slate-50 flex justify-between items-center my-3 text-xs font-medium">
         <div>
-          <span>Invoice No.: </span>
-          <span className="font-bold text-black">{invoice?.invoiceNumber || ''}</span>
+          <span className="text-slate-600">Invoice No.: </span>
+          <span className="font-bold font-mono text-black">{invoice?.invoiceNumber || ''}</span>
         </div>
         <div>
-          <span>Invoice Date: </span>
+          <span className="text-slate-600">Invoice Date: </span>
           <span className="font-bold text-black">{invoice?.invoiceDate || ''}</span>
         </div>
+        {invoice?.dueDate && (
+          <div>
+            <span className="text-slate-600">Due Date: </span>
+            <span className="font-bold text-black">{invoice.dueDate}</span>
+          </div>
+        )}
       </div>
 
       {/* 3. Bill To & Ship To Boxes Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-3">
         {/* BILL TO */}
-        <div className="border border-slate-400 rounded-xl p-3.5 space-y-1 min-h-[130px]">
-          <h3 className="text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-            BILL TO
+        <div className="border border-slate-400 rounded-xl p-3.5 space-y-1 min-h-[130px] bg-white">
+          <h3 className="text-[10px] font-extrabold text-slate-600 uppercase tracking-wider mb-1 border-b border-slate-200 pb-0.5">
+            BILL TO (RECEIVER)
           </h3>
           <h4 className="font-extrabold text-sm text-black">
             {invoice?.partyName || ''}
@@ -102,16 +119,21 @@ export default function SairamExactTemplate({ invoice, company }) {
           </p>
           {invoice?.partyGstin && (
             <p className="text-xs pt-1">
-              <span className="font-bold text-black">GSTIN: </span>
-              <span className="font-bold text-black uppercase">{invoice.partyGstin}</span>
+              <span className="font-bold text-slate-700">GSTIN: </span>
+              <span className="font-bold font-mono text-black uppercase">{invoice.partyGstin}</span>
+            </p>
+          )}
+          {invoice?.partyStateName && (
+            <p className="text-[11px] text-slate-600">
+              <span>State: </span><span className="font-semibold text-black">{invoice.partyStateName} ({invoice.partyStateCode})</span>
             </p>
           )}
         </div>
 
         {/* SHIP TO */}
-        <div className="border border-slate-400 rounded-xl p-3.5 space-y-1 min-h-[130px]">
-          <h3 className="text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">
-            SHIP TO
+        <div className="border border-slate-400 rounded-xl p-3.5 space-y-1 min-h-[130px] bg-white">
+          <h3 className="text-[10px] font-extrabold text-slate-600 uppercase tracking-wider mb-1 border-b border-slate-200 pb-0.5">
+            SHIP TO (CONSIGNEE)
           </h3>
           <h4 className="font-extrabold text-sm text-black">
             {invoice?.shippingName || invoice?.partyName || ''}
@@ -119,6 +141,11 @@ export default function SairamExactTemplate({ invoice, company }) {
           <p className="text-slate-700 text-xs leading-snug whitespace-pre-line">
             {invoice?.shippingAddress || invoice?.partyAddress || ''}
           </p>
+          {invoice?.placeOfSupply && (
+            <p className="text-[11px] text-slate-600 pt-1">
+              <span>Place of Supply: </span><span className="font-semibold text-black">{invoice.placeOfSupply}</span>
+            </p>
+          )}
         </div>
       </div>
 
@@ -210,6 +237,20 @@ export default function SairamExactTemplate({ invoice, company }) {
               <span className="font-mono font-bold text-black">₹ {formatIndianNumber(totals.totalIGST)}</span>
             </div>
           )}
+
+          {totals.extraCharges > 0 && (
+            <div className="flex justify-between text-slate-700">
+              <span>Delivery / Extra Charges</span>
+              <span className="font-mono font-bold text-black">₹ {formatIndianNumber(totals.extraCharges)}</span>
+            </div>
+          )}
+
+          {totals.roundOffAmount !== 0 && (
+            <div className="flex justify-between text-slate-600 text-[11px]">
+              <span>Round Off</span>
+              <span className="font-mono font-bold text-black">{totals.roundOffAmount > 0 ? '+' : ''}{formatIndianNumber(totals.roundOffAmount)}</span>
+            </div>
+          )}
         </div>
 
         <div className="w-full sm:w-72 border-t-2 border-b-2 border-black py-1.5 flex justify-between font-extrabold text-sm text-black">
@@ -224,7 +265,7 @@ export default function SairamExactTemplate({ invoice, company }) {
           </div>
 
           <div className="flex justify-between text-slate-700 font-bold">
-            <span>Balance</span>
+            <span>Balance Due</span>
             <span className="font-mono font-bold text-black">₹ {formatIndianNumber(balanceAmount)}</span>
           </div>
         </div>
@@ -238,9 +279,53 @@ export default function SairamExactTemplate({ invoice, company }) {
         </div>
       </div>
 
-      {/* 6. Footer Note */}
-      <div className="pt-8 text-center text-xs font-medium text-slate-700 italic border-t border-slate-200 mt-6">
-        Thank you for your business!
+      {/* 6. Bank Details & Payment Section */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-4 p-3.5 border border-slate-300 rounded-xl bg-slate-50 text-xs">
+        <div className="space-y-1">
+          <h4 className="font-extrabold text-xs text-black uppercase tracking-wider border-b border-slate-300 pb-1 mb-1.5">
+            Bank Payment Details
+          </h4>
+          {company?.bankName && <p className="text-slate-800"><span className="font-semibold text-slate-600">Bank Name:</span> <span className="font-bold text-black">{company.bankName}</span></p>}
+          {company?.accountNo && <p className="text-slate-800"><span className="font-semibold text-slate-600">Account No:</span> <span className="font-mono font-bold text-black">{company.accountNo}</span></p>}
+          {company?.ifsc && <p className="text-slate-800"><span className="font-semibold text-slate-600">IFSC Code:</span> <span className="font-mono font-bold text-black uppercase">{company.ifsc}</span></p>}
+          {company?.branch && <p className="text-slate-800"><span className="font-semibold text-slate-600">Branch:</span> <span className="font-medium text-black">{company.branch}</span></p>}
+          {company?.upiId && <p className="text-slate-800"><span className="font-semibold text-slate-600">UPI ID:</span> <span className="font-mono font-bold text-emerald-800">{company.upiId}</span></p>}
+        </div>
+
+        {company?.upiId && (
+          <div className="flex flex-col items-center justify-center text-center p-2 bg-white rounded-lg border border-slate-200">
+            <span className="text-[10px] font-bold text-slate-700 uppercase mb-1">Scan & Pay via UPI</span>
+            <img 
+              src={`https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=${encodeURIComponent(`upi://pay?pa=${company.upiId}&pn=${encodeURIComponent(company.name || 'Bloomarina')}&am=${totals.grandTotal}&cu=INR`)}`}
+              alt="UPI QR Code"
+              className="w-18 h-18 rounded border border-slate-200 p-1 object-contain bg-white"
+            />
+            <span className="font-mono text-[9px] text-slate-600 font-semibold mt-1">{company.upiId}</span>
+          </div>
+        )}
+      </div>
+
+      {/* 7. Footer & Signatory Note */}
+      <div className="pt-4 border-t border-slate-200 mt-4 flex justify-between items-end">
+        <div className="max-w-md text-slate-600 text-[10px] space-y-1">
+          {company?.termsAndConditions && (
+            <>
+              <p className="font-bold text-slate-800 uppercase">Terms & Conditions:</p>
+              <p className="whitespace-pre-line leading-relaxed">{company.termsAndConditions}</p>
+            </>
+          )}
+          <p className="italic text-slate-500 pt-1">Thank you for your business!</p>
+        </div>
+
+        <div className="text-center w-48 border-t border-slate-300 pt-2">
+          {company?.signatureUrl ? (
+            <img src={company.signatureUrl} alt="Authorized Signatory" className="h-10 mx-auto mb-1 object-contain" />
+          ) : (
+            <div className="h-10"></div>
+          )}
+          <p className="font-bold text-slate-900 text-xs uppercase">For {company?.name || 'Company'}</p>
+          <p className="text-[10px] text-slate-500 mt-0.5">Authorized Signatory</p>
+        </div>
       </div>
     </div>
   );

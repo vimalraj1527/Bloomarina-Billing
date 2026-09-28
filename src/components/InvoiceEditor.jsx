@@ -253,10 +253,16 @@ export default function InvoiceEditor({
     if (!element) return;
 
     const opt = {
-      margin: 5,
+      margin: [5, 5, 5, 5],
       filename: `Invoice_${invoiceNumber || 'Draft'}.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
+      html2canvas: { 
+        scale: 2, 
+        useCORS: true,
+        letterRendering: true,
+        scrollX: 0,
+        scrollY: 0
+      },
       jsPDF: { unit: 'mm', format: selectedTemplate === 'thermal' ? [80, 200] : 'a4', orientation: 'portrait' }
     };
 

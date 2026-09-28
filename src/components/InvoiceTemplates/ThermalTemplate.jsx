@@ -3,45 +3,50 @@ import { calculateInvoiceTotals, formatIndianNumber } from '../../utils/gstCalcu
 
 export default function ThermalTemplate({ invoice, company }) {
   const totals = calculateInvoiceTotals(
-    invoice.items || [],
-    company.stateCode,
-    invoice.partyStateCode,
-    invoice.extraCharges || 0,
-    invoice.roundOff !== false
+    invoice?.items || [],
+    company?.stateCode || '',
+    invoice?.partyStateCode || '',
+    invoice?.extraCharges || 0,
+    invoice?.roundOff !== false
   );
 
-  const isIntra = company.stateCode === invoice.partyStateCode;
+  const isIntra = company?.stateCode === invoice?.partyStateCode || !invoice?.partyStateCode;
 
   return (
     <div id="invoice-print-area" className="w-[300px] mx-auto bg-white text-black p-3 shadow-md print:shadow-none print:w-full font-mono text-[11px] leading-tight">
       {/* Header */}
       <div className="text-center border-b border-dashed border-black pb-2 mb-2">
-        <h2 className="font-bold text-sm uppercase">{company.name}</h2>
-        <p className="text-[10px]">{company.address}</p>
-        <p className="text-[10px]">GSTIN: {company.gstin}</p>
-        <p className="text-[10px]">Ph: {company.phone}</p>
+        <h2 className="font-bold text-sm uppercase">{company?.name}</h2>
+        <p className="text-[10px]">{company?.address}</p>
+        {company?.gstin && <p className="text-[10px]">GSTIN: {company.gstin}</p>}
+        {company?.phone && <p className="text-[10px]">Ph: {company.phone}</p>}
+        <div className="mt-1">
+          <span className="text-[9px] font-bold border border-black px-1.5 py-0.5 rounded uppercase">
+            ORIGINAL FOR RECIPIENT
+          </span>
+        </div>
       </div>
 
       {/* Bill Meta */}
       <div className="border-b border-dashed border-black pb-2 mb-2 space-y-0.5">
         <div className="flex justify-between font-bold">
-          <span>{invoice.docType || 'INVOICE'}</span>
-          <span>{invoice.invoiceNumber}</span>
+          <span>{invoice?.docType || 'INVOICE'}</span>
+          <span>#{invoice?.invoiceNumber}</span>
         </div>
-        <div className="flex justify-between">
-          <span>Date: {invoice.invoiceDate}</span>
-          <span>POS: {invoice.partyStateCode}</span>
+        <div className="flex justify-between text-[10px]">
+          <span>Date: {invoice?.invoiceDate}</span>
+          {invoice?.partyStateCode && <span>POS: {invoice.partyStateCode}</span>}
         </div>
         <div>
           <span>Customer: </span>
-          <span className="font-bold">{invoice.partyName}</span>
+          <span className="font-bold">{invoice?.partyName}</span>
         </div>
-        {invoice.partyGstin && <div>GSTIN: {invoice.partyGstin}</div>}
+        {invoice?.partyGstin && <div className="text-[10px]">GSTIN: {invoice.partyGstin}</div>}
       </div>
 
       {/* Items */}
       <div className="border-b border-dashed border-black pb-2 mb-2">
-        <div className="flex justify-between font-bold border-b border-black pb-1 mb-1">
+        <div className="flex justify-between font-bold border-b border-black pb-1 mb-1 text-[10px]">
           <span className="w-1/2">ITEM</span>
           <span className="w-1/4 text-center">QTY</span>
           <span className="w-1/4 text-right">AMT</span>
@@ -50,8 +55,8 @@ export default function ThermalTemplate({ invoice, company }) {
         {totals.items.map((item, idx) => (
           <div key={idx} className="mb-1">
             <div className="font-bold">{item.name}</div>
-            <div className="flex justify-between text-[10px] text-gray-700">
-              <span>HSN:{item.hsnCode} @{item.gstRate}%</span>
+            <div className="flex justify-between text-[10px] text-slate-800">
+              <span>HSN:{item.hsnCode || '-'} @{item.gstRate}%</span>
               <span>{item.quantity} x ₹{formatIndianNumber(item.unitPrice)}</span>
               <span className="font-bold text-black">₹{formatIndianNumber(item.totalAmount)}</span>
             </div>
@@ -60,7 +65,7 @@ export default function ThermalTemplate({ invoice, company }) {
       </div>
 
       {/* Totals */}
-      <div className="space-y-1 border-b border-dashed border-black pb-2 mb-2">
+      <div className="space-y-1 border-b border-dashed border-black pb-2 mb-2 text-[10px]">
         <div className="flex justify-between">
           <span>Taxable Value:</span>
           <span>₹{formatIndianNumber(totals.subtotalTaxable)}</span>
@@ -94,20 +99,30 @@ export default function ThermalTemplate({ invoice, company }) {
         </div>
       </div>
 
+      {/* Bank & Payment Info Footer */}
+      {(company?.bankName || company?.accountNo) && (
+        <div className="border-b border-dashed border-black pb-2 mb-2 text-[9px] space-y-0.5">
+          <p className="font-bold uppercase">Bank Account Details:</p>
+          {company?.bankName && <p>Bank: {company.bankName}</p>}
+          {company?.accountNo && <p>A/C: {company.accountNo}</p>}
+          {company?.ifsc && <p>IFSC: {company.ifsc}</p>}
+        </div>
+      )}
+
       {/* Footer */}
       <div className="text-center space-y-1 pt-1">
         <p className="font-bold">Thank You! Visit Again.</p>
-        {company.upiId && (
+        {company?.upiId && (
           <div className="flex flex-col items-center mt-2">
             <img 
-              src={`https://api.qrserver.com/v1/create-qr-code/?size=70x70&data=${encodeURIComponent(`upi://pay?pa=${company.upiId}&pn=${encodeURIComponent(company.name)}&am=${totals.grandTotal}&cu=INR`)}`}
+              src={`https://api.qrserver.com/v1/create-qr-code/?size=70x70&data=${encodeURIComponent(`upi://pay?pa=${company.upiId}&pn=${encodeURIComponent(company.name || 'Bloomarina')}&am=${totals.grandTotal}&cu=INR`)}`}
               alt="UPI QR Code"
-              className="w-14 h-14"
+              className="w-14 h-14 object-contain bg-white border border-slate-200 p-0.5 rounded"
             />
-            <span className="text-[9px] mt-0.5">Pay via UPI: {company.upiId}</span>
+            <span className="text-[9px] mt-0.5 font-bold">UPI: {company.upiId}</span>
           </div>
         )}
-        <p className="text-[9px] text-gray-500 mt-1">E. & O.E.</p>
+        <p className="text-[9px] text-slate-500 mt-1">E. & O.E.</p>
       </div>
     </div>
   );
