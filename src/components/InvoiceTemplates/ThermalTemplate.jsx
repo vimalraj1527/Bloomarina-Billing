@@ -20,8 +20,21 @@ export default function ThermalTemplate({ invoice, company }) {
         <p className="text-[10px]">{company?.address}</p>
         {company?.gstin && <p className="text-[10px]">GSTIN: {company.gstin}</p>}
         {company?.phone && <p className="text-[10px]">Ph: {company.phone}</p>}
-        <div className="mt-1">
-          <span className="text-[9px] font-bold border border-black px-1.5 py-0.5 rounded uppercase">
+        <div className="mt-1" style={{ display: 'inline-block' }}>
+          <span style={{ 
+            display: 'inline-block', 
+            lineHeight: '12px', 
+            padding: '2px 6px', 
+            fontSize: '9px', 
+            fontWeight: '800', 
+            textTransform: 'uppercase', 
+            textAlign: 'center', 
+            color: '#000000', 
+            backgroundColor: '#ffffff', 
+            border: '1px solid #000000', 
+            borderRadius: '3px',
+            boxSizing: 'border-box'
+          }}>
             ORIGINAL FOR RECIPIENT
           </span>
         </div>

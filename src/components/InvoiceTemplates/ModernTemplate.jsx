@@ -36,13 +36,60 @@ export default function ModernTemplate({ invoice, company }) {
         </div>
 
         <div className="text-right space-y-2">
-          <div className="flex flex-col items-end space-y-1">
-            <span className="inline-block bg-sky-700 text-white font-bold text-base px-4 py-1.5 rounded uppercase tracking-wider">
+          <div className="flex flex-col items-end space-y-1.5">
+            <span style={{ 
+              display: 'inline-block', 
+              lineHeight: '18px', 
+              padding: '4px 14px', 
+              fontSize: '14px', 
+              fontWeight: '800', 
+              textTransform: 'uppercase', 
+              textAlign: 'center', 
+              color: '#ffffff', 
+              backgroundColor: '#0369a1', 
+              borderRadius: '4px',
+              boxSizing: 'border-box'
+            }}>
               {invoice?.docType || 'TAX INVOICE'}
             </span>
-            <span className="inline-block text-[10px] font-bold text-sky-900 border border-sky-300 px-2.5 py-0.5 rounded uppercase bg-sky-50">
-              ORIGINAL FOR RECIPIENT
-            </span>
+            <div style={{ display: 'inline-block' }}>
+              <span style={{ 
+                display: 'inline-block', 
+                lineHeight: '14px', 
+                padding: '3px 10px', 
+                fontSize: '10px', 
+                fontWeight: '800', 
+                textTransform: 'uppercase', 
+                textAlign: 'center', 
+                color: '#0c4a6e', 
+                backgroundColor: '#f0f9ff', 
+                border: '1.5px solid #7dd3fc', 
+                borderRadius: '4px',
+                boxSizing: 'border-box'
+              }}>
+                ORIGINAL FOR RECIPIENT
+              </span>
+            </div>
+            {invoice?.paymentStatus && (
+              <div style={{ display: 'inline-block' }}>
+                <span style={{ 
+                  display: 'inline-block', 
+                  lineHeight: '14px', 
+                  padding: '3px 10px', 
+                  fontSize: '10px', 
+                  fontWeight: '800', 
+                  textTransform: 'uppercase', 
+                  textAlign: 'center', 
+                  color: invoice.paymentStatus === 'Paid' ? '#065f46' : '#92400e', 
+                  backgroundColor: invoice.paymentStatus === 'Paid' ? '#d1fae5' : '#fef3c7', 
+                  border: invoice.paymentStatus === 'Paid' ? '1.5px solid #059669' : '1.5px solid #d97706', 
+                  borderRadius: '4px',
+                  boxSizing: 'border-box'
+                }}>
+                  {invoice.paymentStatus}
+                </span>
+              </div>
+            )}
           </div>
           <div className="space-y-1 text-slate-700 pt-1">
             <p><span className="font-semibold">Invoice No:</span> <span className="font-mono font-bold text-slate-900">{invoice?.invoiceNumber}</span></p>

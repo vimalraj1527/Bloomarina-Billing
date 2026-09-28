@@ -38,18 +38,44 @@ export default function SairamExactTemplate({ invoice, company }) {
             <h2 className="font-black text-lg tracking-wider text-black uppercase m-0 p-0 leading-none">
               {invoice?.docType || 'TAX INVOICE'}
             </h2>
-            <span className="text-[10px] font-bold text-slate-900 border border-slate-500 px-2.5 py-0.5 rounded uppercase leading-none bg-slate-100 shrink-0">
-              ORIGINAL FOR RECIPIENT
-            </span>
+            <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+              <span style={{ 
+                display: 'inline-block', 
+                lineHeight: '14px', 
+                padding: '3px 10px', 
+                fontSize: '10px', 
+                fontWeight: '800', 
+                textTransform: 'uppercase', 
+                textAlign: 'center', 
+                color: '#0f172a', 
+                backgroundColor: '#f1f5f9', 
+                border: '1.5px solid #475569', 
+                borderRadius: '4px',
+                boxSizing: 'border-box'
+              }}>
+                ORIGINAL FOR RECIPIENT
+              </span>
+            </div>
           </div>
           {invoice?.paymentStatus && (
-            <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded uppercase border ${
-              invoice.paymentStatus === 'Paid' 
-                ? 'bg-emerald-100 text-emerald-800 border-emerald-300' 
-                : 'bg-amber-100 text-amber-800 border-amber-300'
-            }`}>
-              {invoice.paymentStatus}
-            </span>
+            <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+              <span style={{ 
+                display: 'inline-block', 
+                lineHeight: '14px', 
+                padding: '3px 10px', 
+                fontSize: '10px', 
+                fontWeight: '800', 
+                textTransform: 'uppercase', 
+                textAlign: 'center', 
+                color: invoice.paymentStatus === 'Paid' ? '#065f46' : '#92400e', 
+                backgroundColor: invoice.paymentStatus === 'Paid' ? '#d1fae5' : '#fef3c7', 
+                border: invoice.paymentStatus === 'Paid' ? '1.5px solid #059669' : '1.5px solid #d97706', 
+                borderRadius: '4px',
+                boxSizing: 'border-box'
+              }}>
+                {invoice.paymentStatus}
+              </span>
+            </div>
           )}
         </div>
 

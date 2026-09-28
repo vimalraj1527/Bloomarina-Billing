@@ -19,9 +19,44 @@ export default function MinimalTemplate({ invoice, company }) {
         <div>
           <div className="flex items-center space-x-3 mb-1">
             <h1 className="text-3xl font-light tracking-wider text-slate-900 leading-none m-0 p-0">{invoice?.docType || 'INVOICE'}</h1>
-            <span className="text-[10px] font-bold text-slate-700 border border-slate-300 px-2 py-0.5 rounded uppercase leading-none bg-slate-50">
-              ORIGINAL FOR RECIPIENT
-            </span>
+            <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+              <span style={{ 
+                display: 'inline-block', 
+                lineHeight: '14px', 
+                padding: '3px 10px', 
+                fontSize: '10px', 
+                fontWeight: '800', 
+                textTransform: 'uppercase', 
+                textAlign: 'center', 
+                color: '#334155', 
+                backgroundColor: '#f8fafc', 
+                border: '1.5px solid #cbd5e1', 
+                borderRadius: '4px',
+                boxSizing: 'border-box'
+              }}>
+                ORIGINAL FOR RECIPIENT
+              </span>
+            </div>
+            {invoice?.paymentStatus && (
+              <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
+                <span style={{ 
+                  display: 'inline-block', 
+                  lineHeight: '14px', 
+                  padding: '3px 10px', 
+                  fontSize: '10px', 
+                  fontWeight: '800', 
+                  textTransform: 'uppercase', 
+                  textAlign: 'center', 
+                  color: invoice.paymentStatus === 'Paid' ? '#065f46' : '#92400e', 
+                  backgroundColor: invoice.paymentStatus === 'Paid' ? '#d1fae5' : '#fef3c7', 
+                  border: invoice.paymentStatus === 'Paid' ? '1.5px solid #059669' : '1.5px solid #d97706', 
+                  borderRadius: '4px',
+                  boxSizing: 'border-box'
+                }}>
+                  {invoice.paymentStatus}
+                </span>
+              </div>
+            )}
           </div>
           <p className="font-mono text-sm text-slate-500">#{invoice?.invoiceNumber}</p>
         </div>
