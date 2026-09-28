@@ -1,0 +1,45 @@
+{
+  "users": [
+    {
+      "id": "user_admin_1",
+      "email": "rvimalrajcse@gmail.com",
+      "passwordHash": "$2a$10$wB5e5NqK9n.Y8m4tE4pW1eG2YQ7GZ1Q5k0GZ5k0GZ5k0GZ5k0GZ5k",
+      "passwordRaw": "Rajiniroy@1527",
+      "name": "Vimal Raj (Super Admin)",
+      "role": "SuperAdmin",
+      "companyId": "comp_bloomarina_1",
+      "status": "Active",
+      "createdAt": "2026-09-28"
+    }
+  ],
+  "companies": [
+    {
+      "id": "comp_bloomarina_1",
+      "name": "Bloomarina Technologies Pvt Ltd",
+      "tradeName": "Bloomarina Billing",
+      "gstin": "",
+      "pan": "",
+      "stateCode": "",
+      "stateName": "",
+      "email": "rvimalrajcse@gmail.com",
+      "phone": "",
+      "address": "",
+      "city": "",
+      "pincode": "",
+      "bankName": "",
+      "accountNo": "",
+      "ifsc": "",
+      "branch": "",
+      "upiId": "",
+      "logoUrl": "",
+      "signatureUrl": "",
+      "termsAndConditions": "1. Goods once sold will not be returned without valid verification.\n2. Payment due within 15 days of invoice issue date.",
+      "invoicePrefix": "INV-2425-",
+      "nextInvoiceNumber": 101,
+      "defaultTemplate": "sairam"
+    }
+  ],
+  "invoices": [],
+  "parties": [],
+  "items": []
+}
