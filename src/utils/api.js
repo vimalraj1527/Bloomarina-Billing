@@ -15,6 +15,15 @@ function getToken() {
 }
 
 async function apiRequest(endpoint, method = 'GET', body = null) {
+  // On static client hosts (like GitHub Pages) where no backend API URL is configured,
+  // do not send HTTP network requests to static server routes /api/... which cause 405 Method Not Allowed.
+  if (!API_BASE_URL) {
+    if (method === 'GET') {
+      return null;
+    }
+    return { success: true, isLocalStorage: true };
+  }
+
   const token = getToken();
   const headers = {
     'Content-Type': 'application/json'

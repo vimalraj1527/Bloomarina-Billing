@@ -155,12 +155,19 @@ export default function App() {
 
   // Save Company handler
   const handleSaveCompany = (updatedCompany) => {
-    const updatedComps = companies.map(c => c.id === updatedCompany.id ? updatedCompany : c);
+    let updatedComps;
+    const exists = companies.some(c => c.id === updatedCompany.id);
+    if (exists) {
+      updatedComps = companies.map(c => c.id === updatedCompany.id ? updatedCompany : c);
+    } else {
+      updatedComps = [...companies, updatedCompany];
+    }
     setCompanies(updatedComps);
     saveCompanies(updatedComps);
     api.saveCompany(updatedCompany).catch(err => console.warn('API saveCompany fallback:', err));
-    if (updatedCompany.id === activeCompany?.id) {
-      setActiveCompany(updatedCompany);
+    setActiveCompany(updatedCompany);
+    if (updatedCompany.id) {
+      setStoredActiveCompanyId(updatedCompany.id);
     }
   };
 
