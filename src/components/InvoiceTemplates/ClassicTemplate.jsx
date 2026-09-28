@@ -13,49 +13,49 @@ export default function ClassicTemplate({ invoice, company }) {
   const isIntra = company?.stateCode === invoice?.partyStateCode || !invoice?.partyStateCode;
 
   return (
-    <div id="invoice-print-area" className="w-full max-w-[800px] mx-auto bg-white text-black p-6 shadow-2xl border-2 border-black print:shadow-none print:p-2 text-xs font-serif">
+    <div id="invoice-print-area" className="w-full max-w-[800px] mx-auto bg-white text-black p-6 shadow-2xl border-2 border-black print:shadow-none print:p-0 text-xs font-serif" style={{ boxSizing: 'border-box' }}>
       {/* Top Banner */}
       <div className="text-center border-b-2 border-black pb-2 mb-2">
         <div className="flex items-center justify-center space-x-3 mb-1">
           <h1 className="text-xl font-bold uppercase tracking-wider leading-none m-0 p-0">{invoice?.docType || 'TAX INVOICE'}</h1>
-          <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-            <span style={{ 
-              display: 'inline-block', 
-              lineHeight: '14px', 
-              padding: '3px 10px', 
-              fontSize: '10px', 
-              fontWeight: '800', 
-              textTransform: 'uppercase', 
-              textAlign: 'center', 
-              color: '#000000', 
-              backgroundColor: '#f8fafc', 
-              border: '1.5px solid #000000', 
-              borderRadius: '4px',
-              fontFamily: 'sans-serif',
-              boxSizing: 'border-box'
-            }}>
-              ORIGINAL FOR RECIPIENT
-            </span>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '22px',
+            padding: '0 10px',
+            fontSize: '10px',
+            fontWeight: '800',
+            textTransform: 'uppercase',
+            color: '#000000',
+            backgroundColor: '#f8fafc',
+            border: '1.5px solid #000000',
+            borderRadius: '4px',
+            fontFamily: 'sans-serif',
+            boxSizing: 'border-box',
+            lineHeight: '1'
+          }}>
+            ORIGINAL FOR RECIPIENT
           </div>
           {invoice?.paymentStatus && (
-            <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-              <span style={{ 
-                display: 'inline-block', 
-                lineHeight: '14px', 
-                padding: '3px 10px', 
-                fontSize: '10px', 
-                fontWeight: '800', 
-                textTransform: 'uppercase', 
-                textAlign: 'center', 
-                color: invoice.paymentStatus === 'Paid' ? '#065f46' : '#92400e', 
-                backgroundColor: invoice.paymentStatus === 'Paid' ? '#d1fae5' : '#fef3c7', 
-                border: invoice.paymentStatus === 'Paid' ? '1.5px solid #059669' : '1.5px solid #d97706', 
-                borderRadius: '4px',
-                fontFamily: 'sans-serif',
-                boxSizing: 'border-box'
-              }}>
-                {invoice.paymentStatus}
-              </span>
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '22px',
+              padding: '0 10px',
+              fontSize: '10px',
+              fontWeight: '800',
+              textTransform: 'uppercase',
+              color: invoice.paymentStatus === 'Paid' ? '#065f46' : '#92400e',
+              backgroundColor: invoice.paymentStatus === 'Paid' ? '#d1fae5' : '#fef3c7',
+              border: invoice.paymentStatus === 'Paid' ? '1.5px solid #059669' : '1.5px solid #d97706',
+              borderRadius: '4px',
+              fontFamily: 'sans-serif',
+              boxSizing: 'border-box',
+              lineHeight: '1'
+            }}>
+              {invoice.paymentStatus}
             </div>
           )}
         </div>
@@ -64,7 +64,7 @@ export default function ClassicTemplate({ invoice, company }) {
 
       {/* Header Grid */}
       <div className="grid grid-cols-2 border-b-2 border-black divide-x-2 divide-black mb-0">
-        <div className="p-3 space-y-0.5 font-sans text-xs">
+        <div className="p-2.5 space-y-0.5 font-sans text-xs">
           <h2 className="font-bold text-base uppercase text-black font-serif">{company?.name}</h2>
           <p>{company?.address}, {company?.city} - {company?.pincode}</p>
           {company?.stateName && <p>State: {company.stateName} (Code: {company.stateCode})</p>}
@@ -72,7 +72,7 @@ export default function ClassicTemplate({ invoice, company }) {
           <p>Email: {company?.email} | Phone: {company?.phone}</p>
         </div>
 
-        <div className="p-3 space-y-1 font-sans text-xs">
+        <div className="p-2.5 space-y-0.5 font-sans text-xs">
           <p><strong>Invoice No:</strong> <span className="font-mono font-bold">{invoice?.invoiceNumber}</span></p>
           <p><strong>Invoice Date:</strong> {invoice?.invoiceDate}</p>
           {invoice?.dueDate && <p><strong>Due Date:</strong> {invoice.dueDate}</p>}
@@ -83,8 +83,8 @@ export default function ClassicTemplate({ invoice, company }) {
       </div>
 
       {/* Buyer Info */}
-      <div className="border-b-2 border-black p-3 bg-gray-50 font-sans text-xs">
-        <h3 className="font-bold uppercase text-[10px] mb-1 tracking-wider text-slate-700">Details of Receiver / Billed To:</h3>
+      <div className="border-b-2 border-black p-2.5 bg-gray-50 font-sans text-xs">
+        <h3 className="font-bold uppercase text-[10px] mb-0.5 tracking-wider text-slate-700">Details of Receiver / Billed To:</h3>
         <p className="font-bold text-sm text-black">{invoice?.partyName}</p>
         <p className="text-slate-800">{invoice?.partyAddress}</p>
         {invoice?.partyStateName && <p className="text-slate-800">State: {invoice.partyStateName} (Code: {invoice.partyStateCode})</p>}
@@ -147,14 +147,14 @@ export default function ClassicTemplate({ invoice, company }) {
 
       {/* Totals & Bank Details Grid */}
       <div className="grid grid-cols-12 border-b-2 border-black divide-x-2 divide-black">
-        <div className="col-span-7 p-3 font-sans space-y-3">
+        <div className="col-span-7 p-2.5 font-sans space-y-2">
           <div>
             <p className="font-bold text-[10px] uppercase mb-0.5 text-slate-700">Invoice Amount in Words:</p>
             <p className="italic font-semibold text-xs text-black">{totals.amountInWords}</p>
           </div>
 
           {/* Detailed Bank Details Box */}
-          <div className="pt-2 border-t border-gray-300 space-y-1">
+          <div className="pt-1.5 border-t border-gray-300 space-y-0.5">
             <p className="font-bold uppercase text-[10px] text-black border-b border-gray-200 pb-0.5 mb-1">
               Bank Payment Details
             </p>
@@ -166,7 +166,7 @@ export default function ClassicTemplate({ invoice, company }) {
           </div>
         </div>
 
-        <div className="col-span-5 p-3 space-y-1 font-sans text-xs">
+        <div className="col-span-5 p-2.5 space-y-1 font-sans text-xs">
           <div className="flex justify-between">
             <span>Total Taxable Amount:</span>
             <span className="font-mono">₹{formatIndianNumber(totals.subtotalTaxable)}</span>
@@ -200,27 +200,27 @@ export default function ClassicTemplate({ invoice, company }) {
               <span className="font-mono">{totals.roundOffAmount > 0 ? '+' : ''}{formatIndianNumber(totals.roundOffAmount)}</span>
             </div>
           )}
-          <div className="border-t border-black pt-1 flex justify-between font-bold text-sm">
+          <div className="border-t border-black pt-1 flex justify-between font-bold text-xs">
             <span>GRAND TOTAL:</span>
-            <span className="font-mono">₹{formatIndianNumber(totals.grandTotal)}</span>
+            <span className="font-mono font-bold">₹{formatIndianNumber(totals.grandTotal)}</span>
           </div>
         </div>
       </div>
 
       {/* Terms & Signature */}
-      <div className="grid grid-cols-2 p-3 pt-4 font-sans">
+      <div className="grid grid-cols-2 p-2.5 pt-3 font-sans">
         <div>
           {company?.termsAndConditions && (
             <>
               <p className="font-bold uppercase text-[10px] text-slate-700">Terms & Conditions:</p>
-              <p className="whitespace-pre-line text-[10px] text-gray-700">{company.termsAndConditions}</p>
+              <p className="whitespace-pre-line text-[10px] text-gray-700 leading-snug">{company.termsAndConditions}</p>
             </>
           )}
         </div>
-        <div className="text-right pt-4">
+        <div className="text-right pt-2">
           <p className="font-bold text-xs">For {company?.name}</p>
-          <div className="h-10"></div>
-          <p className="text-[10px] border-t border-black inline-block pt-1 px-4">Authorized Signatory</p>
+          <div className="h-8"></div>
+          <p className="text-[10px] border-t border-black inline-block pt-0.5 px-4">Authorized Signatory</p>
         </div>
       </div>
     </div>

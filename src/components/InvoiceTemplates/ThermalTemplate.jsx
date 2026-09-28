@@ -13,30 +13,52 @@ export default function ThermalTemplate({ invoice, company }) {
   const isIntra = company?.stateCode === invoice?.partyStateCode || !invoice?.partyStateCode;
 
   return (
-    <div id="invoice-print-area" className="w-[300px] mx-auto bg-white text-black p-3 shadow-md print:shadow-none print:w-full font-mono text-[11px] leading-tight">
+    <div id="invoice-print-area" className="w-[300px] mx-auto bg-white text-black p-3 shadow-md print:shadow-none print:w-full font-mono text-[11px] leading-tight" style={{ boxSizing: 'border-box' }}>
       {/* Header */}
       <div className="text-center border-b border-dashed border-black pb-2 mb-2">
         <h2 className="font-bold text-sm uppercase">{company?.name}</h2>
         <p className="text-[10px]">{company?.address}</p>
         {company?.gstin && <p className="text-[10px]">GSTIN: {company.gstin}</p>}
         {company?.phone && <p className="text-[10px]">Ph: {company.phone}</p>}
-        <div className="mt-1" style={{ display: 'inline-block' }}>
-          <span style={{ 
-            display: 'inline-block', 
-            lineHeight: '12px', 
-            padding: '2px 6px', 
-            fontSize: '9px', 
-            fontWeight: '800', 
-            textTransform: 'uppercase', 
-            textAlign: 'center', 
-            color: '#000000', 
-            backgroundColor: '#ffffff', 
-            border: '1px solid #000000', 
+        <div className="mt-1 flex items-center justify-center space-x-1">
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '18px',
+            padding: '0 6px',
+            fontSize: '9px',
+            fontWeight: '800',
+            textTransform: 'uppercase',
+            color: '#000000',
+            backgroundColor: '#ffffff',
+            border: '1px solid #000000',
             borderRadius: '3px',
-            boxSizing: 'border-box'
+            boxSizing: 'border-box',
+            lineHeight: '1'
           }}>
             ORIGINAL FOR RECIPIENT
-          </span>
+          </div>
+          {invoice?.paymentStatus && (
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '18px',
+              padding: '0 6px',
+              fontSize: '9px',
+              fontWeight: '800',
+              textTransform: 'uppercase',
+              color: '#000000',
+              backgroundColor: '#ffffff',
+              border: '1px solid #000000',
+              borderRadius: '3px',
+              boxSizing: 'border-box',
+              lineHeight: '1'
+            }}>
+              {invoice.paymentStatus}
+            </div>
+          )}
         </div>
       </div>
 

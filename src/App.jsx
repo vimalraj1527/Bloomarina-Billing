@@ -340,7 +340,7 @@ export default function App() {
     if (!element || !viewingInvoice) return;
 
     const opt = {
-      margin: [5, 5, 5, 5],
+      margin: [4, 4, 4, 4],
       filename: `Bloomarina_${viewingInvoice.docType.replace(/\s+/g, '_')}_${viewingInvoice.invoiceNumber}.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { 
@@ -350,7 +350,8 @@ export default function App() {
         scrollX: 0,
         scrollY: 0
       },
-      jsPDF: { unit: 'mm', format: previewTemplate === 'thermal' ? [80, 200] : 'a4', orientation: 'portrait' }
+      jsPDF: { unit: 'mm', format: previewTemplate === 'thermal' ? [80, 200] : 'a4', orientation: 'portrait' },
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
     };
 
     html2pdf().set(opt).from(element).save();

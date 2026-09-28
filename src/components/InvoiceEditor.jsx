@@ -253,7 +253,7 @@ export default function InvoiceEditor({
     if (!element) return;
 
     const opt = {
-      margin: [5, 5, 5, 5],
+      margin: [4, 4, 4, 4],
       filename: `Invoice_${invoiceNumber || 'Draft'}.pdf`,
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { 
@@ -263,7 +263,8 @@ export default function InvoiceEditor({
         scrollX: 0,
         scrollY: 0
       },
-      jsPDF: { unit: 'mm', format: selectedTemplate === 'thermal' ? [80, 200] : 'a4', orientation: 'portrait' }
+      jsPDF: { unit: 'mm', format: selectedTemplate === 'thermal' ? [80, 200] : 'a4', orientation: 'portrait' },
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
     };
 
     html2pdf().set(opt).from(element).save();

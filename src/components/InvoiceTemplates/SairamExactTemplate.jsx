@@ -29,62 +29,63 @@ export default function SairamExactTemplate({ invoice, company }) {
   return (
     <div 
       id="invoice-print-area" 
-      className="w-full max-w-[800px] mx-auto bg-white text-slate-900 p-8 shadow-2xl border border-slate-300 font-sans print:shadow-none print:p-0 print:border-none print:max-w-full text-[13px] leading-tight select-none"
+      className="w-full max-w-[800px] mx-auto bg-white text-slate-900 p-6 shadow-2xl border border-slate-300 font-sans print:shadow-none print:p-0 print:border-none print:max-w-full text-[12px] leading-tight select-none"
+      style={{ boxSizing: 'border-box' }}
     >
       {/* 1. Header Section */}
-      <div className="space-y-1 pb-3">
+      <div className="pb-2">
         <div className="flex items-center justify-between pb-1">
           <div className="flex items-center space-x-3">
             <h2 className="font-black text-lg tracking-wider text-black uppercase m-0 p-0 leading-none">
               {invoice?.docType || 'TAX INVOICE'}
             </h2>
-            <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-              <span style={{ 
-                display: 'inline-block', 
-                lineHeight: '14px', 
-                padding: '3px 10px', 
-                fontSize: '10px', 
-                fontWeight: '800', 
-                textTransform: 'uppercase', 
-                textAlign: 'center', 
-                color: '#0f172a', 
-                backgroundColor: '#f1f5f9', 
-                border: '1.5px solid #475569', 
-                borderRadius: '4px',
-                boxSizing: 'border-box'
-              }}>
-                ORIGINAL FOR RECIPIENT
-              </span>
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '22px',
+              padding: '0 10px',
+              fontSize: '10px',
+              fontWeight: '800',
+              textTransform: 'uppercase',
+              color: '#0f172a',
+              backgroundColor: '#f1f5f9',
+              border: '1.5px solid #475569',
+              borderRadius: '4px',
+              boxSizing: 'border-box',
+              lineHeight: '1'
+            }}>
+              ORIGINAL FOR RECIPIENT
             </div>
           </div>
           {invoice?.paymentStatus && (
-            <div style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-              <span style={{ 
-                display: 'inline-block', 
-                lineHeight: '14px', 
-                padding: '3px 10px', 
-                fontSize: '10px', 
-                fontWeight: '800', 
-                textTransform: 'uppercase', 
-                textAlign: 'center', 
-                color: invoice.paymentStatus === 'Paid' ? '#065f46' : '#92400e', 
-                backgroundColor: invoice.paymentStatus === 'Paid' ? '#d1fae5' : '#fef3c7', 
-                border: invoice.paymentStatus === 'Paid' ? '1.5px solid #059669' : '1.5px solid #d97706', 
-                borderRadius: '4px',
-                boxSizing: 'border-box'
-              }}>
-                {invoice.paymentStatus}
-              </span>
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '22px',
+              padding: '0 10px',
+              fontSize: '10px',
+              fontWeight: '800',
+              textTransform: 'uppercase',
+              color: invoice.paymentStatus === 'Paid' ? '#065f46' : '#92400e',
+              backgroundColor: invoice.paymentStatus === 'Paid' ? '#d1fae5' : '#fef3c7',
+              border: invoice.paymentStatus === 'Paid' ? '1.5px solid #059669' : '1.5px solid #d97706',
+              borderRadius: '4px',
+              boxSizing: 'border-box',
+              lineHeight: '1'
+            }}>
+              {invoice.paymentStatus}
             </div>
           )}
         </div>
 
-        <h1 className="font-heading font-black text-2xl sm:text-3xl text-black tracking-tight pt-1 uppercase">
+        <h1 className="font-heading font-black text-2xl sm:text-3xl text-black tracking-tight pt-0.5 uppercase">
           {company?.name || ''}
         </h1>
 
         {companyAddressFormatted && (
-          <p className="text-slate-700 text-xs font-medium">
+          <p className="text-slate-700 text-xs font-medium pt-0.5">
             {companyAddressFormatted}
           </p>
         )}
@@ -110,10 +111,10 @@ export default function SairamExactTemplate({ invoice, company }) {
         )}
       </div>
 
-      <hr className="border-t-2 border-black my-2" />
+      <hr className="border-t-2 border-black my-1.5" />
 
       {/* 2. Invoice Meta Box */}
-      <div className="border border-slate-400 rounded-lg p-2.5 bg-slate-50 flex justify-between items-center my-3 text-xs font-medium">
+      <div className="border border-slate-400 rounded-lg p-2 bg-slate-50 flex justify-between items-center my-2 text-xs font-medium">
         <div>
           <span className="text-slate-600">Invoice No.: </span>
           <span className="font-bold font-mono text-black">{invoice?.invoiceNumber || ''}</span>
@@ -131,10 +132,10 @@ export default function SairamExactTemplate({ invoice, company }) {
       </div>
 
       {/* 3. Bill To & Ship To Boxes Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 my-2">
         {/* BILL TO */}
-        <div className="border border-slate-400 rounded-xl p-3.5 space-y-1 min-h-[130px] bg-white">
-          <h3 className="text-[10px] font-extrabold text-slate-600 uppercase tracking-wider mb-1 border-b border-slate-200 pb-0.5">
+        <div className="border border-slate-400 rounded-lg p-2.5 space-y-0.5 min-h-[105px] bg-white">
+          <h3 className="text-[10px] font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 border-b border-slate-200 pb-0.5">
             BILL TO (RECEIVER)
           </h3>
           <h4 className="font-extrabold text-sm text-black">
@@ -144,7 +145,7 @@ export default function SairamExactTemplate({ invoice, company }) {
             {invoice?.partyAddress || ''}
           </p>
           {invoice?.partyGstin && (
-            <p className="text-xs pt-1">
+            <p className="text-xs pt-0.5">
               <span className="font-bold text-slate-700">GSTIN: </span>
               <span className="font-bold font-mono text-black uppercase">{invoice.partyGstin}</span>
             </p>
@@ -157,8 +158,8 @@ export default function SairamExactTemplate({ invoice, company }) {
         </div>
 
         {/* SHIP TO */}
-        <div className="border border-slate-400 rounded-xl p-3.5 space-y-1 min-h-[130px] bg-white">
-          <h3 className="text-[10px] font-extrabold text-slate-600 uppercase tracking-wider mb-1 border-b border-slate-200 pb-0.5">
+        <div className="border border-slate-400 rounded-lg p-2.5 space-y-0.5 min-h-[105px] bg-white">
+          <h3 className="text-[10px] font-extrabold text-slate-600 uppercase tracking-wider mb-0.5 border-b border-slate-200 pb-0.5">
             SHIP TO (CONSIGNEE)
           </h3>
           <h4 className="font-extrabold text-sm text-black">
@@ -168,7 +169,7 @@ export default function SairamExactTemplate({ invoice, company }) {
             {invoice?.shippingAddress || invoice?.partyAddress || ''}
           </p>
           {invoice?.placeOfSupply && (
-            <p className="text-[11px] text-slate-600 pt-1">
+            <p className="text-[11px] text-slate-600 pt-0.5">
               <span>Place of Supply: </span><span className="font-semibold text-black">{invoice.placeOfSupply}</span>
             </p>
           )}
@@ -176,16 +177,16 @@ export default function SairamExactTemplate({ invoice, company }) {
       </div>
 
       {/* 4. Items Table */}
-      <div className="my-4 border border-slate-400 rounded-lg overflow-hidden">
+      <div className="my-2.5 border border-slate-400 rounded-lg overflow-hidden">
         <table className="w-full border-collapse text-left text-xs">
           <thead>
             <tr className="bg-slate-100 text-black border-b border-slate-400 font-extrabold text-[11px] uppercase">
-              <th className="p-2.5 border-r border-slate-400 w-[35%]">ITEMS</th>
-              <th className="p-2.5 border-r border-slate-400 text-center w-[15%]">HSN</th>
-              <th className="p-2.5 border-r border-slate-400 text-center w-[12%]">QTY.</th>
-              <th className="p-2.5 border-r border-slate-400 text-right w-[12%]">RATE (₹)</th>
-              <th className="p-2.5 border-r border-slate-400 text-right w-[13%]">TAX (₹)</th>
-              <th className="p-2.5 text-right w-[13%]">AMOUNT (₹)</th>
+              <th className="p-2 border-r border-slate-400 w-[35%]">ITEMS</th>
+              <th className="p-2 border-r border-slate-400 text-center w-[15%]">HSN</th>
+              <th className="p-2 border-r border-slate-400 text-center w-[12%]">QTY.</th>
+              <th className="p-2 border-r border-slate-400 text-right w-[12%]">RATE (₹)</th>
+              <th className="p-2 border-r border-slate-400 text-right w-[13%]">TAX (₹)</th>
+              <th className="p-2 text-right w-[13%]">AMOUNT (₹)</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-300">
@@ -195,25 +196,25 @@ export default function SairamExactTemplate({ invoice, company }) {
 
               return (
                 <tr key={idx} className="align-top">
-                  <td className="p-2.5 border-r border-slate-400 font-semibold text-black uppercase">
+                  <td className="p-2 border-r border-slate-400 font-semibold text-black uppercase">
                     {item.name}
                   </td>
-                  <td className="p-2.5 border-r border-slate-400 text-center font-mono text-slate-800">
+                  <td className="p-2 border-r border-slate-400 text-center font-mono text-slate-800">
                     {item.hsnCode || '-'}
                   </td>
-                  <td className="p-2.5 border-r border-slate-400 text-center font-medium">
+                  <td className="p-2 border-r border-slate-400 text-center font-medium">
                     {qtyDisplay}
                   </td>
-                  <td className="p-2.5 border-r border-slate-400 text-right font-mono text-slate-800">
+                  <td className="p-2 border-r border-slate-400 text-right font-mono text-slate-800">
                     {formatIndianNumber(item.unitPrice)}
                   </td>
-                  <td className="p-2.5 border-r border-slate-400 text-right font-mono">
+                  <td className="p-2 border-r border-slate-400 text-right font-mono">
                     <div className="font-semibold text-black">{formatIndianNumber(item.gstAmount)}</div>
                     {gstPctDisplay && (
                       <div className="text-[10px] text-slate-500 font-normal">{gstPctDisplay}</div>
                     )}
                   </td>
-                  <td className="p-2.5 text-right font-mono font-bold text-black">
+                  <td className="p-2 text-right font-mono font-bold text-black">
                     {formatIndianNumber(item.totalAmount)}
                   </td>
                 </tr>
@@ -222,15 +223,15 @@ export default function SairamExactTemplate({ invoice, company }) {
 
             {/* SUBTOTAL ROW */}
             <tr className="border-t-2 border-slate-400 font-bold bg-slate-50 text-black text-xs">
-              <td colSpan={2} className="p-2.5 border-r border-slate-400 text-left font-extrabold uppercase">
+              <td colSpan={2} className="p-2 border-r border-slate-400 text-left font-extrabold uppercase">
                 SUBTOTAL
               </td>
-              <td className="p-2.5 border-r border-slate-400 text-center font-extrabold">
+              <td className="p-2 border-r border-slate-400 text-center font-extrabold">
                 {totalQty}
               </td>
-              <td className="p-2.5 border-r border-slate-400"></td>
-              <td className="p-2.5 border-r border-slate-400"></td>
-              <td className="p-2.5 text-right font-mono font-extrabold text-sm">
+              <td className="p-2 border-r border-slate-400"></td>
+              <td className="p-2 border-r border-slate-400"></td>
+              <td className="p-2 text-right font-mono font-extrabold text-xs">
                 ₹ {formatIndianNumber(totals.grandTotal)}
               </td>
             </tr>
@@ -239,8 +240,8 @@ export default function SairamExactTemplate({ invoice, company }) {
       </div>
 
       {/* 5. Summary Breakdown Section */}
-      <div className="flex flex-col items-end my-4 text-xs font-medium space-y-1.5">
-        <div className="w-full sm:w-72 space-y-1.5 border-b border-slate-300 pb-2">
+      <div className="flex flex-col items-end my-2.5 text-xs font-medium space-y-1">
+        <div className="w-full sm:w-72 space-y-1 border-b border-slate-300 pb-1.5">
           <div className="flex justify-between text-slate-700">
             <span>Taxable Amount</span>
             <span className="font-mono font-bold text-black">₹ {formatIndianNumber(totals.subtotalTaxable)}</span>
@@ -279,12 +280,12 @@ export default function SairamExactTemplate({ invoice, company }) {
           )}
         </div>
 
-        <div className="w-full sm:w-72 border-t-2 border-b-2 border-black py-1.5 flex justify-between font-extrabold text-sm text-black">
+        <div className="w-full sm:w-72 border-t-2 border-b-2 border-black py-1 flex justify-between font-extrabold text-xs text-black">
           <span>Total Amount</span>
           <span className="font-mono">₹ {formatIndianNumber(totals.grandTotal)}</span>
         </div>
 
-        <div className="w-full sm:w-72 space-y-1 pt-1">
+        <div className="w-full sm:w-72 space-y-0.5 pt-0.5">
           <div className="flex justify-between text-slate-700">
             <span>Received Amount</span>
             <span className="font-mono font-bold text-black">₹ {formatIndianNumber(receivedAmount)}</span>
@@ -297,7 +298,7 @@ export default function SairamExactTemplate({ invoice, company }) {
         </div>
 
         {/* Total Amount in Words */}
-        <div className="w-full text-right pt-3">
+        <div className="w-full text-right pt-2">
           <span className="block text-[11px] font-bold text-black">Total Amount (in words)</span>
           <span className="block text-xs font-semibold text-black italic">
             {totals.amountInWords}
@@ -306,9 +307,9 @@ export default function SairamExactTemplate({ invoice, company }) {
       </div>
 
       {/* 6. Bank Details & Payment Section */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-4 p-3.5 border border-slate-300 rounded-xl bg-slate-50 text-xs">
-        <div className="space-y-1">
-          <h4 className="font-extrabold text-xs text-black uppercase tracking-wider border-b border-slate-300 pb-1 mb-1.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-2.5 p-3 border border-slate-300 rounded-lg bg-slate-50 text-xs">
+        <div className="space-y-0.5">
+          <h4 className="font-extrabold text-[11px] text-black uppercase tracking-wider border-b border-slate-300 pb-0.5 mb-1">
             Bank Payment Details
           </h4>
           {company?.bankName && <p className="text-slate-800"><span className="font-semibold text-slate-600">Bank Name:</span> <span className="font-bold text-black">{company.bankName}</span></p>}
@@ -319,35 +320,35 @@ export default function SairamExactTemplate({ invoice, company }) {
         </div>
 
         {company?.upiId && (
-          <div className="flex flex-col items-center justify-center text-center p-2 bg-white rounded-lg border border-slate-200">
-            <span className="text-[10px] font-bold text-slate-700 uppercase mb-1">Scan & Pay via UPI</span>
+          <div className="flex flex-col items-center justify-center text-center p-1.5 bg-white rounded border border-slate-200">
+            <span className="text-[10px] font-bold text-slate-700 uppercase mb-0.5">Scan & Pay via UPI</span>
             <img 
-              src={`https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=${encodeURIComponent(`upi://pay?pa=${company.upiId}&pn=${encodeURIComponent(company.name || 'Bloomarina')}&am=${totals.grandTotal}&cu=INR`)}`}
+              src={`https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(`upi://pay?pa=${company.upiId}&pn=${encodeURIComponent(company.name || 'Bloomarina')}&am=${totals.grandTotal}&cu=INR`)}`}
               alt="UPI QR Code"
-              className="w-18 h-18 rounded border border-slate-200 p-1 object-contain bg-white"
+              className="w-16 h-16 rounded border border-slate-200 p-0.5 object-contain bg-white"
             />
-            <span className="font-mono text-[9px] text-slate-600 font-semibold mt-1">{company.upiId}</span>
+            <span className="font-mono text-[9px] text-slate-600 font-semibold mt-0.5">{company.upiId}</span>
           </div>
         )}
       </div>
 
       {/* 7. Footer & Signatory Note */}
-      <div className="pt-4 border-t border-slate-200 mt-4 flex justify-between items-end">
-        <div className="max-w-md text-slate-600 text-[10px] space-y-1">
+      <div className="pt-2 border-t border-slate-200 mt-2 flex justify-between items-end">
+        <div className="max-w-md text-slate-600 text-[10px] space-y-0.5">
           {company?.termsAndConditions && (
             <>
               <p className="font-bold text-slate-800 uppercase">Terms & Conditions:</p>
-              <p className="whitespace-pre-line leading-relaxed">{company.termsAndConditions}</p>
+              <p className="whitespace-pre-line leading-snug">{company.termsAndConditions}</p>
             </>
           )}
-          <p className="italic text-slate-500 pt-1">Thank you for your business!</p>
+          <p className="italic text-slate-500 pt-0.5">Thank you for your business!</p>
         </div>
 
-        <div className="text-center w-48 border-t border-slate-300 pt-2">
+        <div className="text-center w-44 border-t border-slate-300 pt-1">
           {company?.signatureUrl ? (
-            <img src={company.signatureUrl} alt="Authorized Signatory" className="h-10 mx-auto mb-1 object-contain" />
+            <img src={company.signatureUrl} alt="Authorized Signatory" className="h-8 mx-auto mb-0.5 object-contain" />
           ) : (
-            <div className="h-10"></div>
+            <div className="h-6"></div>
           )}
           <p className="font-bold text-slate-900 text-xs uppercase">For {company?.name || 'Company'}</p>
           <p className="text-[10px] text-slate-500 mt-0.5">Authorized Signatory</p>
